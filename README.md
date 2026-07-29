@@ -193,18 +193,18 @@ BehavioralMarket/
 
 The ABM's job was to prove a mechanism, not to trade. The follow-up question — can
 the same behavioral vocabulary (panic, bubble, herding) be computed on **real** market
-data and used as a practical overlay? — lives outside this folder:
+data and used as a practical overlay? — lives in a separate repo,
+[RegimeStrategySuite](https://github.com/axelbill19/RegimeStrategySuite):
 
-- `BehavioralMarket/regime_classifier.py` — classifies real daily returns into
-  **PANIC / BUBBLE / HERD / NORMAL** using walk-forward (expanding, no look-ahead)
-  percentiles of rolling kurtosis, skewness, drawdown and trend persistence. It does
-  **not** match simulated ABM magnitudes against real ones (a Mesa tick isn't a
-  trading day) — the four states are a shared vocabulary with the ABM, not a
-  numeric fingerprint match.
-- `behavioral_overlay_backtest.py` (repo root) — adds a fourth strategy, **S4 = Tech +
-  Régimen + Conductual**, to the existing SAR+EMA200+RSI × 4-quadrant regime backtest
-  (`tech_regime_backtest.py`), on the same 491 S&P 500 stocks (2018–2023).
-- `live_dashboard.py` (repo root) — the current behavioral state now adjusts the daily
+- `regime_classifier.py` (copy of this repo's `BehavioralMarket/regime_classifier.py`)
+  — classifies real daily returns into **PANIC / BUBBLE / HERD / NORMAL** using
+  walk-forward (expanding, no look-ahead) percentiles of rolling kurtosis, skewness,
+  drawdown and trend persistence. It does **not** match simulated ABM magnitudes
+  against real ones (a Mesa tick isn't a trading day) — the four states are a shared
+  vocabulary with the ABM, not a numeric fingerprint match.
+- `unified_backtester_v2.py` — the regime-switching value+tech backtest (S0-S4), on
+  the same 491 S&P 500 stocks (2018–2023).
+- `live_dashboard.py` — the current behavioral state now adjusts the daily
   action: it relaxes the Graham filter during capitulation (PANIC) and flags melt-up
   risk during BUBBLE, on top of the existing regime + fundamentals logic.
 
